@@ -1,0 +1,32 @@
+<div style="padding: 16px">
+  <h4>Add book</h4>
+  <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-control" formControlName="title" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Author</label>
+      <input type="text" class="form-control" formControlName="author" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Genre</label>
+      <input type="text" class="form-control" formControlName="genre" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">ISBN 13</label>
+      <input type="text" class="form-control" formControlName="isbn13" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Image URL</label>
+      <input type="text" class="form-control" formControlName="imageUrl" required>
+    </div>
+
+    <button [disabled]="addBookForm.invalid" type="submit" class="btn btn-success full-width">Add</button>
+
+  </form>
+</div>
