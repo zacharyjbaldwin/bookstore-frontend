@@ -24,6 +24,7 @@ import { BookDetailsModalComponent } from './modals/book-details-modal/book-deta
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SignupComponent } from './signup/signup.component';
     FirstVisitModalComponent,
     BookDetailsModalComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
