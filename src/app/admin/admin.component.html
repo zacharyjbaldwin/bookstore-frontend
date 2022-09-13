@@ -1,74 +1,69 @@
 <div class="row">
-  <div class="col-md-3">
-    <p>TODO: Plans for this page:</p>
-    <ul>
-      <li>Add a route guard to this page so only admins can reach it.</li>
-      <li>Add a list of books that are in the catalog.</li>
-      <ul>
-        <li>Admins can add books to the catalog.</li>
-        <ul>
-          <li>As the admin is adding details to the form, show a live preview of the card that it will create.</li>
-        </ul>
-        <li>Admins can remove books from the catalog.</li>
-        <li>Admins can update book count in the catalog.</li>
-        <li>Maybe: Admins can hide books from the catalog.</li>
-      </ul>
-      <li>Add a list of orders that customers have placed.</li>
-      <ul>
-        <li>Maybe: Admins can mark orders as shipped.</li>
-        <li>Maybe: Admins can cancel orders.</li>
-      </ul>
-      <li>Add a component for managing users</li>
-      <ul>
-        <li>Admins can delete users.</li>
-        <li>Admins can elevate other users to admins.</li>
-      </ul>
-    </ul>
-  </div>
-  <div class="col-md-9">
-    <button class="btn btn-light" (click)="openAddBookModal()">
-      <i class="fa fa-plus"></i>
-      Add Book
-    </button>
-    <table class="full-width">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Genre</th>
-          <th>ISBN 13</th>
-          <th colspan="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let book of inventory; let i = index">
-          <td>{{ book.title }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.genre }}</td>
-          <td>{{ book.isbn13 }}</td>
-          <td><i class="fa fa-eye cursor-pointer"></i></td>
-          <td><i class="fa fa-pen cursor-pointer"></i></td>
-          <td><i class="fa fa-trash cursor-pointer" (click)="deleteBook(i)"></i></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- <div class="col-md-6">
-    <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label class="form-label">Title</label>
-        <input class="form-control" type="text" formControlName="title">
+  <tabset>
+    <tab heading="Store Manager">
+      <div class="row">
+        <div class="col-md-3">
+          <p>TODO: Plans for this page:</p>
+          <ul>
+            <li>Add a route guard to this page so only admins can reach it.</li>
+            <li>Add a list of books that are in the catalog.</li>
+            <ul>
+              <li>Admins can add books to the catalog.</li>
+              <ul>
+                <li>As the admin is adding details to the form, show a live preview of the card that it will create.</li>
+              </ul>
+              <li>Admins can remove books from the catalog.</li>
+              <li>Admins can update book count in the catalog.</li>
+              <li>Maybe: Admins can hide books from the catalog.</li>
+            </ul>
+            <li>Add a list of orders that customers have placed.</li>
+            <ul>
+              <li>Maybe: Admins can mark orders as shipped.</li>
+              <li>Maybe: Admins can cancel orders.</li>
+            </ul>
+            <li>Add a component for managing users</li>
+            <ul>
+              <li>Admins can delete users.</li>
+              <li>Admins can elevate other users to admins.</li>
+            </ul>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <button class="btn btn-light" (click)="openAddBookModal()">
+            <i class="fa fa-plus"></i>
+            Add Book
+          </button>
+          <table class="full-width">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>ISBN 13</th>
+                <th colspan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of inventory; let i = index">
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.genre }}</td>
+                <td>{{ book.isbn13 }}</td>
+                <td><i class="fa fa-pen cursor-pointer"></i></td>
+                <td><i class="fa fa-trash cursor-pointer" (click)="deleteBook(i)"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Author</label>
-        <input class="form-control" type="text" formControlName="author">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Genre</label>
-        <input class="form-control" type="text" formControlName="genre">
-      </div>
-    </form>
-  </div> -->
+
+    </tab>
+    <tab heading="User Manager"></tab>
+    <tab heading="Orders"></tab>
+    <tab heading="Logs"></tab>
+  </tabset>
+
+
 </div>
 
 
