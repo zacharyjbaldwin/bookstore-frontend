@@ -5,6 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,9 @@ import { ConfirmComponent } from './modals/confirm/confirm.component';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { FirstVisitModalComponent } from './modals/first-visit-modal/first-visit-modal.component';
 import { BookDetailsModalComponent } from './modals/book-details-modal/book-details-modal.component';
+import { AuthInterceptor } from './services/auth-interceptor.service';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { BookDetailsModalComponent } from './modals/book-details-modal/book-deta
     ConfirmComponent,
     LoginModalComponent,
     FirstVisitModalComponent,
-    BookDetailsModalComponent
+    BookDetailsModalComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +51,14 @@ import { BookDetailsModalComponent } from './modals/book-details-modal/book-deta
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     FormsModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
