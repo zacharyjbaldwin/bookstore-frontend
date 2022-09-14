@@ -41,13 +41,12 @@ export class BookService {
       quantityInStock: book.quantityInStock,
       imageUrl: book.imageUrl
     }).subscribe({
-      next: (res) => {
-        this.books.push(res.book);
+      next: () => {
+        this.fetchBooks();
         this.toastr.success(`Added ${book.title}`);
-        this.booksListChanged.next(this.books);
       },
-      error: (error) => {
-        this.toastr.error(`Failed to add ${book.title}`);
+      error: () => {
+        this.toastr.error(`Failed to add ${book.title}. Please try again later.`);
       }
     })
   }
@@ -57,8 +56,7 @@ export class BookService {
     this.http.delete(`${environment.apiUrl}/api/books/${book._id}`).subscribe({
       next: () => {
         this.toastr.success(`Deleted ${book.title}`);
-        this.books.splice(index, 1);
-        this.booksListChanged.next(this.books);
+        this.fetchBooks();
       },
       error: () => {
         this.toastr.error(`Failed to delete ${book.title}. Please try again later.`);
@@ -66,11 +64,10 @@ export class BookService {
     });
   }
 
-  public editBook(book: Book) {
+  public editBook(book: Book): void {
     this.http.put<{ message: string, response: Book }>(`${environment.apiUrl}/api/books/${book._id}`, book).subscribe({
       next: (res) => {
         this.toastr.success('Saved changes!');
-        this.booksListChanged.next(this.books);
         this.fetchBooks();
       },
       error: (error) => {
@@ -94,7 +91,7 @@ export class BookService {
     return of([...this.books]);
   }
 
-  private fetchBooks() {
+  private fetchBooks(): void {
     this.http.get<{ message: string, books: Book[] }>(`${environment.apiUrl}/api/books`).subscribe({
       next: (res) => {
         this.books = res.books;
@@ -109,5 +106,9 @@ export class BookService {
 
   public getBookAtIndex(index: number): Book {
     return this.books[index];
+  }
+
+  public getBookById(id: string): Book | undefined {
+    return this.books.find(b => b._id == id);
   }
 }
