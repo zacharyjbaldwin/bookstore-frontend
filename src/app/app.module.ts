@@ -17,7 +17,6 @@ import { CartComponent } from './cart/cart.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddBookModalComponent } from './modals/add-book-modal/add-book-modal.component';
-import { ConfirmComponent } from './modals/confirm/confirm.component';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { FirstVisitModalComponent } from './modals/first-visit-modal/first-visit-modal.component';
 import { BookDetailsModalComponent } from './modals/book-details-modal/book-details-modal.component';
@@ -37,7 +36,6 @@ import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confi
     CartComponent,
     AccountComponent,
     AddBookModalComponent,
-    ConfirmComponent,
     LoginModalComponent,
     FirstVisitModalComponent,
     BookDetailsModalComponent,
