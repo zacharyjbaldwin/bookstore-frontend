@@ -24,7 +24,7 @@
                 <p>
                   Price: {{ book.price ? (book.price | currency: 'USD')  : 'Unavailable' }}
                   <br>
-                  # in stock: {{ book.stock ? book.stock : 'Unknown' }}
+                  # in stock: {{ book.quantityInStock ? book.quantityInStock : 'Unknown' }}
                 </p>
               </div>
             </div>

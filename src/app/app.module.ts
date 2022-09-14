@@ -25,6 +25,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confirm-delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     BookDetailsModalComponent,
     LoginComponent,
     SignupComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ConfirmDeleteModalComponent
   ],
   imports: [
     BrowserModule,

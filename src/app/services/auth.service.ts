@@ -94,7 +94,6 @@ export class AuthService {
   }
 
   public logout(): void {
-    console.log('Logged out.');
     this.token = "";
     this.isAuthenticated = false;
     this.authenticationStatusListener.next(false);
@@ -112,14 +111,12 @@ export class AuthService {
     const now = new Date();
 
     if (!authData) {
-      console.log('No auth data to auto-login with.');
       return;
     }
 
     const expiresIn = authData.expirationDate.getTime() - now.getTime();
 
     if (expiresIn > 0) {
-      console.log('Logged in.');
       this.token = authData.token;
       this.isAuthenticated = true;
       this.userId = authData.userId;
@@ -150,7 +147,7 @@ export class AuthService {
   }
 
   private setAutoLogoutTimer(seconds: number): void {
-    console.log('Setting autoLogoutTimer for ' + seconds + ' seconds.');
+    // console.log('Setting autoLogoutTimer for ' + seconds + ' seconds.');
     this.logoutTimer = setTimeout(() => {
       this.logout();
     }, seconds * 1000);
@@ -182,14 +179,12 @@ export class AuthService {
     this.http.post(`${environment.apiUrl}/api/auth/signup`, body)
       .subscribe({
         next: (response) => {
-          console.log(response);
           // TODO tie this up
           // this.router.navigate(['/'])
         },
         error: (error) => {
           // this.isLoading = false;
           this.authenticationStatusListener.next(false);
-          console.log('Caught the signup error.');
         }
       });
   }

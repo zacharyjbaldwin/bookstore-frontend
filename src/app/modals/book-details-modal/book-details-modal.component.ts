@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book.model';
 import { BookService } from 'src/app/services/book.service';
 
@@ -8,20 +9,27 @@ import { BookService } from 'src/app/services/book.service';
   templateUrl: './book-details-modal.component.html',
   styleUrls: ['./book-details-modal.component.scss']
 })
-export class BookDetailsModalComponent implements OnInit {
+export class BookDetailsModalComponent implements OnInit, OnDestroy {
 
   public index: number = 0;
-  public book: Book;
+  public book!: Book;
+  private subs = new Subscription();
 
   constructor(
     private bookService: BookService,
     private modalRef: BsModalRef
   ) {
-    this.book = this.bookService.getBooks()[this.index];
+    this.subs.add(this.bookService.getBooks().subscribe((books) => {
+      this.book = books[this.index];
+    }))
+
+    // this.book = this.bookService.getBooks()[this.index];
   }
 
   ngOnInit(): void {
-    this.book = this.bookService.getBooks()[this.index];
+    this.subs.add(this.bookService.getBooks().subscribe((books) => {
+      this.book = books[this.index];
+    }))
   }
 
   closeModal() {
@@ -30,6 +38,10 @@ export class BookDetailsModalComponent implements OnInit {
 
   addToCart() {
     alert('Not implemented.');
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
 }

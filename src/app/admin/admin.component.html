@@ -2,7 +2,7 @@
   <tabset>
     <tab heading="Store Manager">
       <div class="row">
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <p>TODO: Plans for this page:</p>
           <ul>
             <li>Add a route guard to this page so only admins can reach it.</li>
@@ -27,29 +27,33 @@
               <li>Admins can elevate other users to admins.</li>
             </ul>
           </ul>
-        </div>
-        <div class="col-md-9">
+        </div> -->
+        <div class="col-md-12 mt-3">
           <button class="btn btn-light" (click)="openAddBookModal()">
             <i class="fa fa-plus"></i>
             Add Book
           </button>
-          <table class="full-width">
+          <table class="full-width table table-striped mt-3">
             <thead>
               <tr>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Genre</th>
                 <th>ISBN 13</th>
+                <th>Price</th>
+                <th>Quantity</th>
                 <th colspan="3">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let book of inventory; let i = index">
+              <tr *ngFor="let book of books; let i = index">
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.genre }}</td>
                 <td>{{ book.isbn13 }}</td>
-                <td><i class="fa fa-pen cursor-pointer"></i></td>
+                <td>{{ book.price | currency:'USD' }}</td>
+                <td>{{ book.quantityInStock }}</td>
+                <td><i class="fa fa-pen cursor-pointer" (click)="editBook(i)"></i></td>
                 <td><i class="fa fa-trash cursor-pointer" (click)="deleteBook(i)"></i></td>
               </tr>
             </tbody>
@@ -62,8 +66,4 @@
     <tab heading="Orders"></tab>
     <tab heading="Logs"></tab>
   </tabset>
-
-
 </div>
-
-

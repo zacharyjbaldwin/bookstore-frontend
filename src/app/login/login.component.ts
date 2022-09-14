@@ -38,8 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.errorMessage = 'Authentication failed.';
           break;
       }
-
-      console.log(error);
     }));
   }
 
