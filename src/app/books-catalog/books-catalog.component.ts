@@ -18,7 +18,7 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
   public genres = ['Adventure', 'Science Fiction', 'Horror', 'Non-Fiction', 'Drama'];
   public books: Book[] = [];
   public searchQuery?: string;
-  public booksLoading: boolean = false;
+  public booksLoading: boolean = true;
   public loadingErrorMessage: string = '';
 
   public loggedIn = false;
@@ -33,14 +33,13 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private modalService: BsModalService,
     private toastr: ToastrService
-  ) {  }
+  ) { }
 
   ngOnInit(): void {
     this.booksLoading = true;
     this.subs.add(this.bookService.getBooks().subscribe((books => {
       this.books = books;
-      this.booksLoading = false;
-    })))
+    })));
 
     this.subs.add(this.bookService.booksListChanged.subscribe((books) => {
       this.books = books;
