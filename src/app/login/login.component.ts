@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { LoginError } from '../shared/login-error.enum';
@@ -15,15 +16,28 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public subs = new Subscription();
   public errorMessage: string = '';
+  public redirectTo: string = '';
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required])
     });
+
+    this.subs.add(this.route.queryParams.subscribe((params) => {
+      if (params['redirectTo']) {
+        this.redirectTo = params['redirectTo'];
+      }
+    }));
   }
 
   ngOnInit(): void {
+
+
+
     this.subs.add(this.authService.loginError.subscribe((error: LoginError) => {
       this.loading = false;
 
@@ -43,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.loading = true;
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password, this.redirectTo);
   }
 
   ngOnDestroy(): void {

@@ -14,9 +14,9 @@ import { BookService } from '../services/book.service';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-  // public addBookForm: FormGroup;
   public books: Book[] = [];
   private subs = new Subscription();
+
   public addBookModal?: BsModalRef;
   public deleteBookModal?: BsModalRef;
 
@@ -24,20 +24,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     private bookService: BookService,
     private toastr: ToastrService,
     private modalService: BsModalService
-  ) {
-
-    // this.inventory = bookService.getBooks();
-  }
+  ) { }
 
   deleteBook(index: number) {
-    // this.bookService.deleteBook(index);
     const book = this.bookService.getBookAtIndex(index);
     this.deleteBookModal = this.modalService.show(ConfirmDeleteModalComponent, { class: 'modal-md', initialState: { title: book.title } });
-    (this.deleteBookModal.content as ConfirmDeleteModalComponent).confirm.subscribe(() => {
+    this.subs.add((this.deleteBookModal.content as ConfirmDeleteModalComponent).confirm.subscribe(() => {
       this.bookService.deleteBook(index);
-    });
-
-    // this.toastr.success(`Deleted ${this.bookService.getBooks()[index].title}`);
+    }));
   }
 
   editBook(index: number) {
@@ -62,12 +56,9 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (failed) {
         // this.booksLoading = false;
         // this.loadingErrorMessage = 'Failed to load books. Please try again later.';
+        this.toastr.error('Failed to load books. Please try again later.');
       }
     }));
-  }
-
-  onSubmit() {
-
   }
 
   ngOnDestroy(): void {

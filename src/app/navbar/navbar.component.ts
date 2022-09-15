@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,20 +9,16 @@ import { CartService } from '../services/cart.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  cart: string[] = [];
+  public showAdminLink: boolean = false;
   private subs = new Subscription();
-  showAdminButton: boolean = true;
 
-  constructor(private cartService: CartService) {
-    if (localStorage.getItem('showAdmin') == 'true') {
-      this.showAdminButton = true;
-    }
+  constructor(private authService: AuthService) {
+    this.subs.add(this.authService.getAuthenticationStatusListener().subscribe(() => {
+      this.showAdminLink = this.authService.getIsAdmin();
+    }));
   }
 
   ngOnInit(): void {
-    this.cartService.cartChanged.subscribe(() => {
-      this.cart.push('asdf');
-    });
   }
 
   ngOnDestroy(): void {

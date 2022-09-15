@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { BookDetailsModalComponent } from '../modals/book-details-modal/book-details-modal.component';
 import { LoginModalComponent } from '../modals/login-modal/login-modal.component';
 import { Book } from '../models/book.model';
+import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 import { CartService } from '../services/cart.service';
 
@@ -20,15 +21,13 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
   public searchQuery?: string;
   public booksLoading: boolean = true;
   public loadingErrorMessage: string = '';
-
-  public loggedIn = false;
-
   private subs = new Subscription();
 
   private loginModal?: BsModalRef;
   private bookDetailsModal?: BsModalRef;
 
   constructor(
+    private authService: AuthService,
     private bookService: BookService,
     private cartService: CartService,
     private modalService: BsModalService,
@@ -55,13 +54,12 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
   }
 
   addToCart() {
-    if (!this.loggedIn) {
+    if (!this.authService.getIsAuthenticated()) {
       this.loginModal = this.modalService.show(LoginModalComponent);
-      (this.loginModal.content as LoginModalComponent).loggedIn.subscribe(() => {
+      this.subs.add((this.loginModal.content as LoginModalComponent).loggedIn.subscribe(() => {
         this.toastr.success('Added to cart!');
         this.cartService.cartChanged.next(1);
-        this.loggedIn = true;
-      });
+      }));
     } else {
       this.toastr.success('Added to cart!');
       this.cartService.cartChanged.next(1);

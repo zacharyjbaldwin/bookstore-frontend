@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginError } from '../shared/login-error.enum';
@@ -12,11 +13,12 @@ export class AuthService {
 
   private authenticationStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
+  private isAdmin: boolean = false;
   private logoutTimer: any;
-  private token: string = "";
-  private userId: string = "";
-  private firstName: string = "";
-  private lastName: string = "";
+  private token: string = '';
+  private userId: string = '';
+  private firstname: string = '';
+  private lastname: string = '';
 
   public loginError = new Subject<LoginError>();
 
@@ -33,6 +35,10 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
+  public getIsAdmin(): boolean {
+    return this.isAdmin;
+  }
+
   public getToken(): string {
     return this.token;
   }
@@ -42,38 +48,41 @@ export class AuthService {
   }
 
   public getFirstName(): string {
-    return this.firstName;
+    return this.firstname;
   }
 
   public getLastName(): string {
-    return this.lastName;
+    return this.lastname;
   }
 
-  public login(email: string, password: string): void {
+  public login(email: string, password: string, redirectTo?: string): void {
     const body = {
       email: email,
       password: password
     };
 
-    this.http.post<{ token: string, expiresIn: number, userId: string, firstName: string, lastName: string }>(`${environment.apiUrl}/api/auth/login`, body)
+    this.http.post<{ token: string, expiresIn: number, userId: string, firstname: string, lastname: string, isAdmin: boolean }>(`${environment.apiUrl}/api/auth/login`, body)
       .subscribe({
         next: (response) => {
           this.token = response.token;
-
           if (this.token) {
 
             const expiresInSeconds = response.expiresIn;
-            this.firstName = response.firstName;
-            this.lastName = response.lastName;
+            this.firstname = response.firstname;
+            this.lastname = response.lastname;
             this.setAutoLogoutTimer(expiresInSeconds);
             this.isAuthenticated = true;
             this.userId = response.userId;
+            this.isAdmin = response.isAdmin;
             this.authenticationStatusListener.next(true);
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInSeconds * 1000);
 
-            this.saveAuthData(this.token, expirationDate, this.userId, this.firstName, this.lastName);
-            this.router.navigate(['/profile']);
+            this.saveAuthData(this.token, expirationDate, this.userId, this.firstname, this.lastname, this.isAdmin);
+
+            if (redirectTo) {
+              this.router.navigate([`/${redirectTo}`]);
+            }
           }
         },
         error: (error) => {
@@ -94,19 +103,19 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.token = "";
+    this.token = '';
     this.isAuthenticated = false;
+    this.isAdmin = false;
     this.authenticationStatusListener.next(false);
-
-    this.userId = "";
+    this.userId = '';
 
     clearInterval(this.logoutTimer);
 
     this.clearAuthData();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
-  public autoLogin() {
+  public autoLogin(): void {
     const authData = this.getAuthData();
     const now = new Date();
 
@@ -120,8 +129,9 @@ export class AuthService {
       this.token = authData.token;
       this.isAuthenticated = true;
       this.userId = authData.userId;
-      this.firstName = authData.firstName;
-      this.lastName = authData.lastName;
+      this.firstname = authData.firstname;
+      this.lastname = authData.lastname;
+      this.isAdmin = authData.isAdmin;
       this.authenticationStatusListener.next(true);
       this.setAutoLogoutTimer(expiresIn / 1000);
     }
@@ -131,23 +141,25 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
-    const firstName = localStorage.getItem('firstName');
-    const lastName = localStorage.getItem('lastName');
+    const firstname = localStorage.getItem('firstname');
+    const lastname = localStorage.getItem('lastname');
+    const isAdmin = localStorage.getItem('isAdmin') == 'true' ? true : false;
 
     if (!token || !expirationDate) {
       return;
     }
+
     return {
       token: token,
       expirationDate: new Date(expirationDate),
       userId: userId,
-      firstName: firstName,
-      lastName: lastName
+      firstname: firstname,
+      lastname: lastname,
+      isAdmin: isAdmin
     }
   }
 
   private setAutoLogoutTimer(seconds: number): void {
-    // console.log('Setting autoLogoutTimer for ' + seconds + ' seconds.');
     this.logoutTimer = setTimeout(() => {
       this.logout();
     }, seconds * 1000);
@@ -157,16 +169,18 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
-    localStorage.removeItem('firstName');
-    localStorage.removeItem('lastName');
+    localStorage.removeItem('firstname');
+    localStorage.removeItem('lastname');
+    localStorage.removeItem('isAdmin');
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string, firstName: string, lastName: string): void {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, firstname: string, lastname: string, isAdmin: boolean): void {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
-    localStorage.setItem('firstName', firstName);
-    localStorage.setItem('lastName', lastName);
+    localStorage.setItem('firstname', firstname);
+    localStorage.setItem('lastname', lastname);
+    localStorage.setItem('isAdmin', (isAdmin == true ? 'true' : 'false'));
   }
 
   public signUp(email: string, name: string, password: string): void {
