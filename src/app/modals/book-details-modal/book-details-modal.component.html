@@ -24,14 +24,18 @@
                 <p>
                   Price: {{ book.price ? (book.price | currency: 'USD')  : 'Unavailable' }}
                   <br>
-                  # in stock: {{ book.quantityInStock ? book.quantityInStock : 'Unknown' }}
+                  # in stock: {{ book.quantityInStock }}
                 </p>
               </div>
             </div>
           </div>
           <div>
-            <button class="btn btn-light full-width" (click)="addToCart()">
-              <i class="fa fa-cart-plus"></i> Add to cart</button>
+            <button class="btn btn-light full-width" *ngIf="book.quantityInStock < 1" disabled>
+              <i class="fa fa-ban"></i> Currently out of stock
+            </button>
+            <button class="btn btn-light full-width" *ngIf="book.quantityInStock >= 1" (click)="addToCart()">
+              <i class="fa fa-cart-plus"></i> Add to cart
+            </button>
           </div>
         </div>
     </div>

@@ -31,7 +31,7 @@ export class AddBookModalComponent implements OnInit {
         isbn13: new FormControl(this.book.isbn13, [Validators.required, Validators.min(1111111111111), Validators.max(9999999999999), Validators.pattern(/\d{13}/)]),
         imageUrl: new FormControl(this.book.imageUrl, [Validators.required, Validators.pattern(/https?:\/\/.+\.(png|jpg|jpeg)/)]),
         price: new FormControl(this.book.price, [Validators.required, Validators.min(1)]),
-        quantityInStock: new FormControl(this.book.quantityInStock, [Validators.required, Validators.min(1)]),
+        quantityInStock: new FormControl(this.book.quantityInStock, [Validators.required, Validators.min(0)]),
         summary: new FormControl(this.book.summary, [Validators.required, Validators.maxLength(500)])
       });
     } else {
@@ -42,7 +42,7 @@ export class AddBookModalComponent implements OnInit {
         isbn13: new FormControl(null, [Validators.required, Validators.min(1111111111111), Validators.max(9999999999999), Validators.pattern(/\d{13}/)]),
         imageUrl: new FormControl(null, [Validators.required, Validators.pattern(/https?:\/\/.+\.(png|jpg|jpeg)/)]),
         price: new FormControl(null, [Validators.required, Validators.min(1)]),
-        quantityInStock: new FormControl(null, [Validators.required, Validators.min(1)]),
+        quantityInStock: new FormControl(null, [Validators.required, Validators.min(0)]),
         summary: new FormControl(null, [Validators.required, Validators.maxLength(500)])
       });
     }

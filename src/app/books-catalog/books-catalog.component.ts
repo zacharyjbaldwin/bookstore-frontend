@@ -16,11 +16,18 @@ import { CartService } from '../services/cart.service';
 })
 export class BooksCatalogComponent implements OnInit, OnDestroy {
 
-  public genres = ['Adventure', 'Science Fiction', 'Horror', 'Non-Fiction', 'Drama'];
+  public genres: string[] = [];
   public books: Book[] = [];
-  public searchQuery?: string;
+
   public booksLoading: boolean = true;
   public loadingErrorMessage: string = '';
+
+  public searchQuery?: string;
+  public genre?: string;
+  public inStockOnly?: boolean;
+  public priceMin?: number;
+  public priceMax?: number;
+
   private subs = new Subscription();
 
   private loginModal?: BsModalRef;
@@ -42,6 +49,7 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
 
     this.subs.add(this.bookService.booksListChanged.subscribe((books) => {
       this.books = books;
+      this.genres = this.bookService.getGenres();
       this.booksLoading = false;
     }));
 
@@ -66,29 +74,26 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateSearch() {
-    // if (this.searchQuery == '') {
-    //   this.books = this.bookService.getBooks();
-    // } else {
-    //   const query = this.searchQuery!.trim().toLowerCase();
-    //   this.books = this.bookService.getBooks().filter((book) => {
-    //     const show = book.title.toLowerCase().includes(query)
-    //       || book.author.toLowerCase().includes(query)
-    //       || book.genre.toLowerCase().includes(query)
-    //       || book.isbn13.toLowerCase().includes(query);
+  updateFilters() {
+    const searchQuery = this.searchQuery == '' ? undefined : this.searchQuery;
+    const genre = this.genre == 'All' ? 'All' : this.genre;
 
-    //     return show;
-    //   });
-    // }
+    this.subs.add(this.bookService.getBooks(searchQuery, genre, this.inStockOnly, this.priceMin, this.priceMax).subscribe((books) => {
+      this.books = books;
+    }));
   }
 
   clearFilters() {
-    // this.searchQuery = '';
-    // this.books = this.bookService.getBooks();
+    this.searchQuery = '';
+    this.genre = 'All';
+    this.inStockOnly = false;
+    this.priceMax = undefined;
+    this.priceMin = undefined;
+    this.updateFilters();
   }
 
   viewDetails(index: number) {
-    this.bookDetailsModal = this.modalService.show(BookDetailsModalComponent, { class: 'modal-lg', initialState: { index: index } });
+    this.bookDetailsModal = this.modalService.show(BookDetailsModalComponent, { class: 'modal-lg', initialState: { id: this.books[index]._id } });
   }
 
   ngOnDestroy(): void {
