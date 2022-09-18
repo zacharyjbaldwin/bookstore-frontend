@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginError } from '../shared/login-error.enum';
+import { SignupError } from '../shared/signup-error.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthService {
   private lastname: string = '';
 
   public loginError = new Subject<LoginError>();
+  public signupError = new Subject<SignupError>();
 
   constructor(
     private http: HttpClient,
@@ -70,11 +72,15 @@ export class AuthService {
             const expiresInSeconds = response.expiresIn;
             this.firstname = response.firstname;
             this.lastname = response.lastname;
+
             this.setAutoLogoutTimer(expiresInSeconds);
+
+
             this.isAuthenticated = true;
             this.userId = response.userId;
             this.isAdmin = response.isAdmin;
             this.authenticationStatusListener.next(true);
+
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInSeconds * 1000);
 
@@ -82,15 +88,17 @@ export class AuthService {
 
             if (redirectTo) {
               this.router.navigate([`/${redirectTo}`]);
+            } else {
+              this.router.navigate(['/']);
             }
           }
         },
         error: (error) => {
           switch (error.error.error) {
-            case 'EMAIL_DOES_NOT_EXIST':
+            case 'EMAIL_DOES_NOT_EXIST': // Email does not exist.
               this.loginError.next(LoginError.EmailDoesNotExist);
               break;
-            case 'INCORRECT_PASSWORD':
+            case 'INCORRECT_PASSWORD': //
               this.loginError.next(LoginError.IncorrectPassword);
               break;
             default:
@@ -183,21 +191,35 @@ export class AuthService {
     localStorage.setItem('isAdmin', (isAdmin == true ? 'true' : 'false'));
   }
 
-  public signUp(email: string, name: string, password: string): void {
+  public signUp(email: string, firstname: string, lastname: string, password: string): void {
     const body = {
       email: email,
-      name: name,
+      firstname: firstname,
+      lastname: lastname,
       password: password
     };
 
     this.http.post(`${environment.apiUrl}/api/auth/signup`, body)
       .subscribe({
         next: (response) => {
+          console.log(response);
+
+
           // TODO tie this up
-          // this.router.navigate(['/'])
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           // this.isLoading = false;
+
+          switch (error.error.error) {
+            case 'EMAIL_ALREADY_IN_USE':
+              this.signupError.next(SignupError.EmailAlreadyInUse);
+              break;
+            default:
+              this.signupError.next(SignupError.GenericSignupError);
+              break;
+          }
+
           this.authenticationStatusListener.next(false);
         }
       });
