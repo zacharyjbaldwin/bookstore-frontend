@@ -2,6 +2,7 @@
 
 .angular/
 .vscode/
+.firebase/
 
 # Compiled output
 /dist
