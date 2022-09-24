@@ -57,10 +57,11 @@
       <ng-container *ngIf="!booksLoading">
         <ng-container *ngIf="books.length > 0; else noBooks">
           <div class="col-lg-3 col-md-6 mb-3" *ngFor="let book of books; let i = index">
-            <div class="book-card d-flex flex-column align-items-center">
+            <div class="book-card d-flex flex-column align-items-center justify-content-between">
               <img class="cover-image mb-1" [src]="book.imageUrl">
               <span class="title">{{ book.title }}</span>
               <span class="author">{{ book.author }}</span>
+
               <div class="d-flex gap-16px mt-1">
                 <button class="btn btn-light btn-sm" (click)="viewDetails(i)">
                   <i class="fa fa-eye"></i> View
