@@ -4,6 +4,7 @@ import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { BooksCatalogComponent } from './books-catalog/books-catalog.component';
 import { CartComponent } from './cart/cart.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginComponent } from './login/login.component';
 import { AdminGuard } from './services/admin.guard';
 import { AuthGuard } from './services/auth.guard';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'cart', canActivate: [AuthGuard], component: CartComponent },
   { path: 'account', canActivate: [AuthGuard], component: AccountComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
+  { path: 'signup', component: SignupComponent },
+  { path: '**', component: ErrorPageComponent }
 ];
 
 @NgModule({
