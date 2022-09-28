@@ -26,6 +26,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confirm-delete-modal.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { UserManagerComponent } from './admin/user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     SignupComponent,
     LoadingSpinnerComponent,
     ConfirmDeleteModalComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    UserManagerComponent
   ],
   imports: [
     BrowserModule,

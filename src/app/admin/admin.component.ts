@@ -40,22 +40,16 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    // this.booksLoading = true;
     this.subs.add(this.bookService.getBooks().subscribe((books => {
       this.books = books;
-      // this.booksLoading = false;
     })))
 
     this.subs.add(this.bookService.booksListChanged.subscribe((books) => {
       this.books = books;
-      // this.booksLoading = false;
     }));
 
     this.subs.add(this.bookService.booksListLoadFailure.subscribe((failed) => {
       if (failed) {
-        // this.booksLoading = false;
-        // this.loadingErrorMessage = 'Failed to load books. Please try again later.';
         this.toastr.error('Failed to load books. Please try again later.');
       }
     }));
@@ -68,5 +62,4 @@ export class AdminComponent implements OnInit, OnDestroy {
   openAddBookModal() {
     this.addBookModal = this.modalService.show(AddBookModalComponent, { class: 'modal-xl' });
   }
-
 }
