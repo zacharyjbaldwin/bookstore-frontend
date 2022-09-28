@@ -1,0 +1,16 @@
+@import "../../utilities.scss";
+
+.nav-button {
+  font-size: 20px;
+  text-decoration-line: none;
+  color: rgb(29, 29, 29);
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &.active {
+    font-weight: bold;
+    color: black;
+  }
+}

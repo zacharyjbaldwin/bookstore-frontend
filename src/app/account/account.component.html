@@ -1,6 +1,28 @@
-<h4>Hello {{firstname}}</h4>
+<div class="row">
+  <div class="col-md-6">
+    <span style="font-size:48px;">Hello {{firstname}}</span>
+    <div class="d-flex flex-column mt-60px">
+      <a type="button" class="nav-button" (click)="show('profile')">PROFILE</a>
+      <a type="button" class="nav-button" (click)="show('order-history')">ORDER HISTORY</a>
+      <a type="button" class="nav-button" (click)="show('address')">ADDRESSES</a>
+      <!-- <a type="button" (click)="show('profile')">PROFILE</a> -->
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="page == ''">Selected content will show up here.</div>
+    <div *ngIf="page == 'profile'">Profile page</div>
+    <div *ngIf="page == 'order-history'">Order history page</div>
+    <div *ngIf="page == 'address'">Address page</div>
+  </div>
+</div>
 
-<p>TODO: Plans for this page:</p>
+
+
+
+
+
+
+<!-- <p>TODO: Plans for this page:</p>
 <ul>
   <li>Add a route guard to this page so only registered users can reach it.</li>
   <li>Add a section for user information.</li>
@@ -8,6 +30,6 @@
     <li>User can update their information (name, email, address, etc...).</li>
   </ul>
   <li>Add a section for order history.</li>
-</ul>
+</ul> -->
 
 <button class="btn btn-danger" (click)="logout()">Log out</button>

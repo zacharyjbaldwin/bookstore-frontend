@@ -28,6 +28,9 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { ConfirmDeleteModalComponent } from './modals/confirm-delete-modal/confirm-delete-modal.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { UserManagerComponent } from './admin/user-manager/user-manager.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { OrderHistoryComponent } from './account/order-history/order-history.component';
+import { AddressViewComponent } from './account/address-view/address-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { UserManagerComponent } from './admin/user-manager/user-manager.componen
     LoadingSpinnerComponent,
     ConfirmDeleteModalComponent,
     ErrorPageComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    ProfileComponent,
+    OrderHistoryComponent,
+    AddressViewComponent
   ],
   imports: [
     BrowserModule,
