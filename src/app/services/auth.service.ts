@@ -20,6 +20,7 @@ export class AuthService {
   private userId: string = '';
   private firstname: string = '';
   private lastname: string = '';
+  private email: string = '';
 
   public loginError = new Subject<LoginError>();
   public signupError = new Subject<SignupError>();
@@ -57,13 +58,17 @@ export class AuthService {
     return this.lastname;
   }
 
+  public getEmail(): string {
+    return this.email;
+  }
+
   public login(email: string, password: string, redirectTo?: string): void {
     const body = {
       email: email,
       password: password
     };
 
-    this.http.post<{ token: string, expiresIn: number, userId: string, firstname: string, lastname: string, isAdmin: boolean }>(`${environment.apiUrl}/api/auth/login`, body)
+    this.http.post<{ token: string, expiresIn: number, userId: string, firstname: string, lastname: string, isAdmin: boolean, email: string }>(`${environment.apiUrl}/api/auth/login`, body)
       .subscribe({
         next: (response) => {
           this.token = response.token;
@@ -75,7 +80,7 @@ export class AuthService {
 
             this.setAutoLogoutTimer(expiresInSeconds);
 
-
+            this.email = response.email;
             this.isAuthenticated = true;
             this.userId = response.userId;
             this.isAdmin = response.isAdmin;
@@ -84,7 +89,7 @@ export class AuthService {
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInSeconds * 1000);
 
-            this.saveAuthData(this.token, expirationDate, this.userId, this.firstname, this.lastname, this.isAdmin);
+            this.saveAuthData(this.token, expirationDate, this.userId, this.firstname, this.lastname, this.isAdmin, this.email);
 
             if (redirectTo) {
               this.router.navigate([`/${redirectTo}`]);
@@ -140,6 +145,7 @@ export class AuthService {
       this.firstname = authData.firstname;
       this.lastname = authData.lastname;
       this.isAdmin = authData.isAdmin;
+      this.email = authData.email;
       this.authenticationStatusListener.next(true);
       this.setAutoLogoutTimer(expiresIn / 1000);
     }
@@ -152,6 +158,7 @@ export class AuthService {
     const firstname = localStorage.getItem('firstname');
     const lastname = localStorage.getItem('lastname');
     const isAdmin = localStorage.getItem('isAdmin') == 'true' ? true : false;
+    const email = localStorage.getItem('email');
 
     if (!token || !expirationDate) {
       return;
@@ -163,7 +170,8 @@ export class AuthService {
       userId: userId,
       firstname: firstname,
       lastname: lastname,
-      isAdmin: isAdmin
+      isAdmin: isAdmin,
+      email: email
     }
   }
 
@@ -182,13 +190,14 @@ export class AuthService {
     localStorage.removeItem('isAdmin');
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string, firstname: string, lastname: string, isAdmin: boolean): void {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, firstname: string, lastname: string, isAdmin: boolean, email: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
     localStorage.setItem('firstname', firstname);
     localStorage.setItem('lastname', lastname);
     localStorage.setItem('isAdmin', (isAdmin == true ? 'true' : 'false'));
+    localStorage.setItem('email', email);
   }
 
   public signUp(email: string, firstname: string, lastname: string, password: string): void {
@@ -202,7 +211,6 @@ export class AuthService {
     this.http.post(`${environment.apiUrl}/api/auth/signup`, body)
       .subscribe({
         next: (response) => {
-          console.log(response);
 
 
           // TODO tie this up

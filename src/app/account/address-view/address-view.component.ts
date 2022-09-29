@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-address-view',
+  selector: 'address-view',
   templateUrl: './address-view.component.html',
   styleUrls: ['./address-view.component.scss']
 })

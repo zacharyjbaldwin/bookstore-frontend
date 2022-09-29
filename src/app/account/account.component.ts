@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class AccountComponent implements OnInit {
 
   public firstname: string;
-  public page: string = '';
+  public page: string = 'profile';
 
   constructor(private authService: AuthService) {
     this.firstname = authService.getFirstName();
