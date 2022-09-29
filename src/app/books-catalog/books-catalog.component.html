@@ -50,7 +50,12 @@
   </div>
   <div class="col-md-9">
     <div class="row">
-      <h3>Books</h3>
+      <div class="d-flex justify-content-between">
+        <h3>Books</h3>
+        <div *ngIf="totalBookCount > booksPerPage" class="d-flex justify-content-center">
+          <pagination [itemsPerPage]="booksPerPage" [totalItems]="totalBookCount" [boundaryLinks]="false" (pageChanged)="changePage($event)"></pagination>
+        </div>
+      </div>
       <div *ngIf="booksLoading" class="d-flex justify-content-center">
         <loading-spinner></loading-spinner>
       </div>

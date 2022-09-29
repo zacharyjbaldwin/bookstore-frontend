@@ -6,6 +6,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,7 +59,8 @@ import { UserManagerComponent } from './admin/user-manager/user-manager.componen
     TooltipModule.forRoot(),
     FormsModule,
     TabsModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    PaginationModule.forRoot()
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

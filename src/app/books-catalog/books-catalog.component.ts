@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { BookDetailsModalComponent } from '../modals/book-details-modal/book-details-modal.component';
@@ -18,6 +19,9 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
 
   public genres: string[] = [];
   public books: Book[] = [];
+  public selectedPage: number = 1;
+  public booksPerPage: number = 8;
+  public totalBookCount: number = 0;
 
   public booksLoading: boolean = true;
   public loadingErrorMessage: string = '';
@@ -44,11 +48,11 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.booksLoading = true;
     this.subs.add(this.bookService.getBooks().subscribe((books => {
-      this.books = books;
+      this.setBooks(books);
     })));
 
     this.subs.add(this.bookService.booksListChanged.subscribe((books) => {
-      this.books = books;
+      this.setBooks(books);
       this.genres = this.bookService.getGenres();
       this.booksLoading = false;
     }));
@@ -75,15 +79,16 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
   }
 
   updateFilters() {
-    const searchQuery = this.searchQuery == '' ? undefined : this.searchQuery;
-    const genre = this.genre == 'All' ? 'All' : this.genre;
-
-    this.subs.add(this.bookService.getBooks(searchQuery, genre, this.inStockOnly, this.priceMin, this.priceMax).subscribe((books) => {
-      this.books = books;
+    this.searchQuery = this.searchQuery == '' ? undefined : this.searchQuery;
+    this.genre = this.genre == 'All' ? 'All' : this.genre;
+    this.selectedPage = 1;
+    this.subs.add(this.bookService.getBooks(this.searchQuery, this.genre, this.inStockOnly, this.priceMin, this.priceMax).subscribe((books) => {
+      this.setBooks(books);
     }));
   }
 
   clearFilters() {
+    this.selectedPage = 1;
     this.searchQuery = '';
     this.genre = 'All';
     this.inStockOnly = false;
@@ -98,5 +103,20 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
+  }
+
+  changePage(event: PageChangedEvent) {
+    this.selectedPage = event.page;
+
+    this.subs.add(this.bookService.getBooks(this.searchQuery, this.genre, this.inStockOnly, this.priceMin, this.priceMax).subscribe((books) => {
+      this.setBooks(books);
+    }));
+  }
+
+  setBooks(books: Book[]) {
+    this.totalBookCount = books.length;
+    let startpoint = (this.selectedPage - 1) * 8;
+    let endpoint = (((this.selectedPage - 1) * 8) + this.booksPerPage) > this.totalBookCount ? this.totalBookCount : (((this.selectedPage - 1) * 8) + this.booksPerPage);
+    this.books = books.slice(startpoint, endpoint);
   }
 }
