@@ -1,9 +1,19 @@
+@import "../../utilities.scss";
+
 .title {
   font-size: 64px;
 }
 
 .overflow-x {
   overflow-x: auto;
+}
+
+i {
+  color: rgb(80, 80, 80);
+
+  &.fa-trash {
+    color: black;
+  }
 }
 
 .cart-table {

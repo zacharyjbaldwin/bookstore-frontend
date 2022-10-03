@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
+  public cart: number[] = [1, 2, 3, 4];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -16,7 +18,7 @@ export class CartComponent implements OnInit {
     this.notImplemented();
   }
 
-  private notImplemented(): void {
+  public notImplemented(): void {
     alert('501 not implemented');
   }
 
