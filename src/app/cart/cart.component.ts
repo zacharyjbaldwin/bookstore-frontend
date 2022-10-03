@@ -12,4 +12,12 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public placeOrder(): void {
+    this.notImplemented();
+  }
+
+  private notImplemented(): void {
+    alert('501 not implemented');
+  }
+
 }

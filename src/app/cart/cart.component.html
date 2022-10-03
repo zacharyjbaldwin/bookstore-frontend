@@ -1,1 +1,59 @@
-<p>cart works!</p>
+<div class="row">
+  <div class="col-md-8 offset-md-2 d-flex flex-column" style="gap: 32px;">
+    <div class="d-flex justify-content-center">
+      <span class="title">Shopping Cart</span>
+    </div>
+    <div class="overflow-x">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th style="width:60%">Book Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>[BOOK TITLE]</td>
+            <td>[QUANTITY]</td>
+            <td>[PRICE]</td>
+          </tr>
+          <tr>
+            <td>[BOOK TITLE]</td>
+            <td>[QUANTITY]</td>
+            <td>[PRICE]</td>
+          </tr>
+          <tr>
+            <td>[BOOK TITLE]</td>
+            <td>[QUANTITY]</td>
+            <td>[PRICE]</td>
+          </tr>
+          <tr>
+            <td>[BOOK TITLE]</td>
+            <td>[QUANTITY]</td>
+            <td>[PRICE]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-end" style="gap:16px;">
+      <div class="d-flex flex-column align-items-end">
+        <span><strong>Subtotal</strong></span>
+        <span><strong>Shipping Rate</strong></span>
+        <span><strong>Tax</strong></span>
+        <span><strong>Total Price</strong></span>
+      </div>
+      <div class="d-flex flex-column align-items-start">
+        <span>[SUBTOTAL]</span>
+        <span>$5 flat-rate shipping</span>
+        <span>[TAX]</span>
+        <span>[TOTAL PRICE]</span>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-light" (click)="placeOrder()">Place Order</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+.title {
+  font-size: 64px;
+}
+
+.overflow-x {
+  overflow-x: auto;
+}
+
+.cart-table {
+  width: 100%;
+
+  th, td {
+    padding: 8px;
+  }
+
+  thead tr {
+    background-color: #D9D9D9;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #FFEBA3;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #FDEDCF;
+  }
+}
+
+
