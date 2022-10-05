@@ -25,7 +25,7 @@
       <label class="form-label">Filter by Genre</label>
       <select class="form-select" [(ngModel)]="genre" (change)="updateFilters()">
         <option>All</option>
-        <option *ngFor="let genre of genres">{{ genre }}</option>
+        <option *ngFor="let genre of genres.sort()">{{ genre }}</option>
       </select>
     </div>
 
