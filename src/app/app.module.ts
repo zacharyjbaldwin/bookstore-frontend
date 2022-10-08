@@ -31,6 +31,7 @@ import { UserManagerComponent } from './admin/user-manager/user-manager.componen
 import { ProfileComponent } from './account/profile/profile.component';
 import { OrderHistoryComponent } from './account/order-history/order-history.component';
 import { AddressViewComponent } from './account/address-view/address-view.component';
+import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AddressViewComponent } from './account/address-view/address-view.compon
     UserManagerComponent,
     ProfileComponent,
     OrderHistoryComponent,
-    AddressViewComponent
+    AddressViewComponent,
+    LogViewerComponent
   ],
   imports: [
     BrowserModule,

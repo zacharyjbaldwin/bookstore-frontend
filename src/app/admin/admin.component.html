@@ -1,33 +1,8 @@
 <div class="row">
   <tabset>
+    <tab heading="Orders">orders will go here</tab>
     <tab heading="Store Manager">
       <div class="row">
-        <!-- <div class="col-md-3">
-          <p>TODO: Plans for this page:</p>
-          <ul>
-            <li>Add a route guard to this page so only admins can reach it.</li>
-            <li>Add a list of books that are in the catalog.</li>
-            <ul>
-              <li>Admins can add books to the catalog.</li>
-              <ul>
-                <li>As the admin is adding details to the form, show a live preview of the card that it will create.</li>
-              </ul>
-              <li>Admins can remove books from the catalog.</li>
-              <li>Admins can update book count in the catalog.</li>
-              <li>Maybe: Admins can hide books from the catalog.</li>
-            </ul>
-            <li>Add a list of orders that customers have placed.</li>
-            <ul>
-              <li>Maybe: Admins can mark orders as shipped.</li>
-              <li>Maybe: Admins can cancel orders.</li>
-            </ul>
-            <li>Add a component for managing users</li>
-            <ul>
-              <li>Admins can delete users.</li>
-              <li>Admins can elevate other users to admins.</li>
-            </ul>
-          </ul>
-        </div> -->
         <div class="col-md-12 mt-3">
           <button class="btn btn-light" (click)="openAddBookModal()">
             <i class="fa fa-plus"></i>
@@ -60,7 +35,6 @@
           </table>
         </div>
       </div>
-
     </tab>
     <tab heading="User Manager">
       <div class="row">
@@ -69,7 +43,8 @@
         </div>
       </div>
     </tab>
-    <tab heading="Orders">orders will go here</tab>
-    <tab heading="Audit Logs">logs will go here</tab>
+    <tab heading="Audit Logs">
+      <log-viewer></log-viewer>
+    </tab>
   </tabset>
 </div>
