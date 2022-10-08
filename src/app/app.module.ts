@@ -7,6 +7,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { OrderHistoryComponent } from './account/order-history/order-history.component';
 import { AddressViewComponent } from './account/address-view/address-view.component';
 import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
+import { OrderViewComponent } from './order-view/order-view.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
     ProfileComponent,
     OrderHistoryComponent,
     AddressViewComponent,
+    OrderViewComponent,
     LogViewerComponent
   ],
   imports: [
@@ -68,7 +71,8 @@ import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
     FormsModule,
     TabsModule.forRoot(),
     HttpClientModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    NgxQRCodeModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
