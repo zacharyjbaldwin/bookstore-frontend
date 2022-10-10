@@ -74,7 +74,7 @@
                 <button class="btn btn-light btn-sm" *ngIf="book.quantityInStock < 1" disabled>
                   <i class="fa fa-ban"></i> Out of stock
                 </button>
-                <button class="btn btn-light btn-sm" *ngIf="book.quantityInStock >= 1" (click)="addToCart()">
+                <button class="btn btn-light btn-sm" *ngIf="book.quantityInStock >= 1" (click)="addToCart(book._id!)">
                   <i class="fa fa-cart-plus"></i> Add to cart
                 </button>
               </div>
@@ -83,7 +83,12 @@
         </ng-container>
         <ng-template #noBooks>
           <div class="d-flex justify-content-center">
-            {{ loadingErrorMessage ? loadingErrorMessage : 'No results.' }}
+            <div *ngIf="loadingErrorMessage; else noResults">
+              <div class="alert alert-danger">{{ loadingErrorMessage }}</div>
+            </div>
+            <ng-template #noResults>
+              No results.
+            </ng-template>
           </div>
         </ng-template>
       </ng-container>

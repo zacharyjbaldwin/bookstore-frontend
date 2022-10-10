@@ -65,16 +65,28 @@ export class BooksCatalogComponent implements OnInit, OnDestroy {
     }));
   }
 
-  addToCart() {
+  addToCart(bookId: string) {
     if (!this.authService.getIsAuthenticated()) {
       this.loginModal = this.modalService.show(LoginModalComponent);
       this.subs.add((this.loginModal.content as LoginModalComponent).loggedIn.subscribe(() => {
-        this.toastr.success('Added to cart!');
-        this.cartService.cartChanged.next(1);
+        this.subs.add(this.cartService.addToCart(bookId).subscribe({
+          next: () => {
+            this.toastr.success('Added to cart!');
+          },
+          error: () => {
+            this.toastr.error('Failed to add book to cart!');
+          }
+        }));
       }));
     } else {
-      this.toastr.success('Added to cart!');
-      this.cartService.cartChanged.next(1);
+      this.subs.add(this.cartService.addToCart(bookId).subscribe({
+        next: () => {
+          this.toastr.success('Added to cart!');
+        },
+        error: () => {
+          this.toastr.error('Failed to add book to cart!');
+        }
+      }));
     }
   }
 

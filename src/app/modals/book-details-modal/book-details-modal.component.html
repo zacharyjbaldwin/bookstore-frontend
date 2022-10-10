@@ -11,7 +11,6 @@
             </div>
             <p class="grey-text">by {{ book.author }}</p>
             <p>{{ book.summary ? book.summary : 'No summary available.' }}</p>
-
             <div class="row">
               <div class="col-md-6">
                 <p>
@@ -33,7 +32,7 @@
             <button class="btn btn-light full-width" *ngIf="book.quantityInStock < 1" disabled>
               <i class="fa fa-ban"></i> Currently out of stock
             </button>
-            <button class="btn btn-light full-width" *ngIf="book.quantityInStock >= 1" (click)="addToCart()">
+            <button class="btn btn-light full-width" *ngIf="book.quantityInStock >= 1" (click)="addToCart(book._id!)">
               <i class="fa fa-cart-plus"></i> Add to cart
             </button>
           </div>
