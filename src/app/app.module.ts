@@ -34,6 +34,9 @@ import { OrderHistoryComponent } from './account/order-history/order-history.com
 import { AddressViewComponent } from './account/address-view/address-view.component';
 import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
 import { OrderViewComponent } from './order-view/order-view.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderCompleteComponent } from './order-complete/order-complete.component';
+import { AddAddressModalComponent } from './modals/add-address-modal/add-address-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,10 @@ import { OrderViewComponent } from './order-view/order-view.component';
     OrderHistoryComponent,
     AddressViewComponent,
     OrderViewComponent,
-    LogViewerComponent
+    LogViewerComponent,
+    CheckoutComponent,
+    OrderCompleteComponent,
+    AddAddressModalComponent
   ],
   imports: [
     BrowserModule,

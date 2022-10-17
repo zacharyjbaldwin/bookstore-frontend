@@ -4,6 +4,7 @@ import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { BooksCatalogComponent } from './books-catalog/books-catalog.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginComponent } from './login/login.component';
 import { OrderViewComponent } from './order-view/order-view.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', component: BooksCatalogComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminComponent },
   { path: 'cart', canActivate: [AuthGuard], component: CartComponent },
+  { path: 'checkout', canActivate: [AuthGuard], component: CheckoutComponent },
   { path: 'account', canActivate: [AuthGuard], component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

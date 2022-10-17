@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AddAddressModalComponent } from 'src/app/modals/add-address-modal/add-address-modal.component';
+import { Address } from 'src/app/models/address.model';
 
 @Component({
   selector: 'address-view',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressViewComponent implements OnInit {
 
-  constructor() { }
+  private addAddressModal?: BsModalRef;
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
+  }
+
+  openAddAddressModal() {
+    this.addAddressModal = this.modalService.show(AddAddressModalComponent, { class: 'modal-md' });
+    (this.addAddressModal.content as AddAddressModalComponent).affirm.subscribe((address: Address) => {
+      console.log(address);
+    });
   }
 
 }
