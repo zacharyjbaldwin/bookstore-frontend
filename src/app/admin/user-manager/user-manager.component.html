@@ -1,31 +1,23 @@
-<p style="font-size: 18px; font-weight: bold; color: red">
-  I put some content here to test the user manager service.
-  <br>
-  You can implement the design however you want.
-  <br>
-  -Zachary
-</p>
-
 <loading-spinner *ngIf="loading"></loading-spinner>
 <div *ngIf="!loading" class="d-flex flex-column">
 
-  <table>
+  <table class="table">
     <thead>
       <tr>
-        <th>name</th>
-        <th>user id</th>
-        <th>isAdmin</th>
-        <th>action</th>
+        <th>Name</th>
+        <th>User ID</th>
+        <th>Admin?</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
         <td>{{ user.firstname }} {{ user.lastname }}</td>
         <td>{{ user._id }}</td>
-        <td>{{ user.isAdmin }}</td>
+        <td>{{ user.isAdmin ? 'Yes' : 'No'}}</td>
         <td>
-          <button *ngIf="user.isAdmin" (click)="demote(user._id)">demote</button>
-          <button *ngIf="!user.isAdmin" (click)="promote(user._id)">promote</button>
+          <button class="btn btn-sm btn-danger" *ngIf="user.isAdmin" (click)="demote(user._id)">Demote</button>
+          <button class="btn btn-sm btn-success" *ngIf="!user.isAdmin" (click)="promote(user._id)">Promote</button>
         </td>
       </tr>
     </tbody>
