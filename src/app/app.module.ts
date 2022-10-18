@@ -37,6 +37,7 @@ import { OrderViewComponent } from './order-view/order-view.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
 import { AddAddressModalComponent } from './modals/add-address-modal/add-address-modal.component';
+import { EditAccountDetailsModalComponent } from './modals/edit-account-details-modal/edit-account-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AddAddressModalComponent } from './modals/add-address-modal/add-address
     LogViewerComponent,
     CheckoutComponent,
     OrderCompleteComponent,
-    AddAddressModalComponent
+    AddAddressModalComponent,
+    EditAccountDetailsModalComponent
   ],
   imports: [
     BrowserModule,

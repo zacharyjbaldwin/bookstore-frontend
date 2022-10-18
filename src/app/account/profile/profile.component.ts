@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EditAccountDetailsModalComponent } from 'src/app/modals/edit-account-details-modal/edit-account-details-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'profile',
@@ -11,8 +14,13 @@ export class ProfileComponent implements OnInit {
   public firstname: string = '';
   public lastname: string = '';
   public email: string = '';
+  private editAccountDetailsModal?: BsModalRef;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private modalService: BsModalService,
+    private userService: UserService
+  ) {
     this.firstname = authService.getFirstName().toUpperCase();
     this.lastname = authService.getLastName().toUpperCase();
     this.email = authService.getEmail().toUpperCase();
@@ -25,16 +33,17 @@ export class ProfileComponent implements OnInit {
     this.authService.logout();
   }
 
-  editName() {
-    alert('501 not implemented');
+  openEditAccountDetailsModal() {
+    this.editAccountDetailsModal = this.modalService.show(EditAccountDetailsModalComponent, { class: 'modal-md' });
+    (this.editAccountDetailsModal.content as EditAccountDetailsModalComponent).affirm.subscribe((results) => {
+      this.changeDetails(results.firstname, results.lastname, results.email);
+    });
   }
 
-  editEmail() {
-    alert('501 not implemented');
-  }
-
-  editPassword() {
-    alert('501 not implemented');
+  changeDetails(firstname: String, lastname: String, email: String) {
+    this.userService.editDetails(firstname, lastname, email).subscribe((results) => {
+      this.authService.logout();
+    })
   }
 
 }

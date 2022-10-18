@@ -2,19 +2,19 @@
 <div style="margin-top: 60px;">
   <div class="d-flex justify-content-between">
     <span class="user-info">{{ firstname }} {{ lastname }}</span>
-    <a type="button" class="a-fix" (click)="editName()">edit</a>
+    <a type="button" class="a-fix" (click)="openEditAccountDetailsModal()">edit</a>
   </div>
   <div class="d-flex justify-content-between">
     <span class="user-info">{{ email }}</span>
-    <a type="button" class="a-fix" (click)="editEmail()">edit</a>
+    <a type="button" class="a-fix" (click)="openEditAccountDetailsModal()">edit</a>
   </div>
 </div>
-<div style="margin-top: 50px;">
+<!-- <div style="margin-top: 50px;">
   <div class="d-flex justify-content-between">
     <span class="user-info">PASS****</span>
     <a type="button" class="a-fix" (click)="editPassword()">edit</a>
   </div>
-</div>
+</div> -->
 <div class="d-flex justify-content-center" style="margin-top: 100px;">
   <a type="button" class="sign-out-button" (click)="logout()">SIGN OUT</a>
 </div>

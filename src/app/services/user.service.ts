@@ -32,4 +32,12 @@ export class UserService {
       zip: address.zip
     });
   }
+
+  public editDetails(firstname: String, lastname: String, email: String) {
+    return this.http.put(`${environment.apiUrl}/api/user`, {
+      firstname: firstname,
+      lastname: lastname,
+      email: email
+    });
+  }
 }
