@@ -45,14 +45,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   goToReview() {
-    console.log(this.paymentForm.value);
     this.currentPage = 'review';
   }
 
   openAddAddressModal() {
     this.addAddressModal = this.modalService.show(AddAddressModalComponent, { class: 'modal-md' });
     (this.addAddressModal.content as AddAddressModalComponent).affirm.subscribe((address: Address) => {
-      console.log(address);
     });
   }
 }
