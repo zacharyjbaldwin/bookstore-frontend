@@ -13,7 +13,7 @@
             <input type="radio" (input)="selectedInput()">
             <div class="d-flex flex-column">
               <label class="form-label">
-                Standard Shipping
+                Standard Shipping (delivery in 3 days)
               </label>
               <span class="text-muted">Estimated delivery:</span>
               <span class="text-muted">{{ deliveryStandard | date:'shortDate' }}</span>
@@ -39,8 +39,7 @@
       <h5>SHIP TO</h5>
       <select class="form-select" (input)="selectedAddress = true;">
         <option selected disabled>Select Address</option>
-        <!-- <option *ngFor="address"></option> -->
-        <option>Zachary Baldwin - 123 Main St, Van Alstyne, TX</option>
+        <option *ngFor="let address of addresses" value="{{ address._id }}">{{ address.sendTo }} - {{ address.addrLine1 }}, {{ address.addrLine2 ? address.addrLine2 + ',' : '' }} {{ address.city }} {{ address.state }}, {{ address.zip }}</option>
       </select>
       <a (click)="openAddAddressModal()" type="button" class="a-fix" style="color: #FE4487;">+ Add new address</a>
     </div>
@@ -116,7 +115,9 @@
   <div *ngIf="currentPage == 'review'" class="col-md-6 offset-md-3" style="gap:32px;">
     <div>
       <h4>ORDER PREVIEW</h4>
-      <button class="btn btn-dark mt-3" style="border-radius: 0px; width:100%">Place order</button>
+      <p>click that button, i dare you</p>
+      <button *ngIf="showPlaceOrderButton" (click)="showPlaceOrderButton = !showPlaceOrderButton" class="btn btn-dark mt-3" style="border-radius: 0px; width:100%">Place order</button>
+      <div *ngIf="!showPlaceOrderButton" class="d-flex justify-content-center">lol</div>
     </div>
   </div>
 </div>

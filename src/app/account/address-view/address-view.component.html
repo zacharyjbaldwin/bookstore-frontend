@@ -12,9 +12,9 @@
           <div class="d-flex flex-column">
             <!-- <span *ngIf="address.defaultAddr" class="text-muted">DEFAULT</span> -->
             <span>{{ address.sendTo }}</span>
-            <span>{{ address.addrLine1 }}</span>
-            <span *ngIf="address.addrLine2">{{ address.addrLine2 }}</span>
-            <span>{{ address.city }} {{ address.state }}, {{ address.zip }}</span>
+            <span class="text-muted">{{ address.addrLine1 }}</span>
+            <span *ngIf="address.addrLine2" class="text-muted">{{ address.addrLine2 }}</span>
+            <span class="text-muted">{{ address.city }} {{ address.state }}, {{ address.zip }}</span>
           </div>
           <a type="button" class="a-red" (click)="deleteAddress(address._id!)">remove</a>
           <!-- <a type="button" class="a-fix">edit</a> -->
