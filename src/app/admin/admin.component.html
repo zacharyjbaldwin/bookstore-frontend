@@ -4,10 +4,15 @@
     <tab heading="Store Manager">
       <div class="row">
         <div class="col-md-12 mt-3">
-          <button class="btn btn-light" (click)="openAddBookModal()">
-            <i class="fa fa-plus"></i>
-            Add Book
-          </button>
+          <div class="d-flex" style="gap: 24px">
+            <button class="btn btn-primary" (click)="openAddBookModal()">
+              <i class="fa fa-plus"></i>
+              Add Book
+            </button>
+            <button class="btn btn-secondary" (click)="openGoogleAPIBookAddModal()">
+              <i class="fa-solid fa-plus"></i> Add Book (Google Books API)
+            </button>
+          </div>
           <table class="full-width table table-striped mt-3">
             <thead>
               <tr>

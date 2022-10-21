@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book.model';
+import { AddBookGoogleApiModalComponent } from '../modals/add-book-google-api-modal/add-book-google-api-modal.component';
 import { AddBookModalComponent } from '../modals/add-book-modal/add-book-modal.component';
 import { ConfirmDeleteModalComponent } from '../modals/confirm-delete-modal/confirm-delete-modal.component';
 import { BookService } from '../services/book.service';
@@ -18,6 +19,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
 
   public addBookModal?: BsModalRef;
+  public addBookGoogleAPIModal?: BsModalRef;
   public deleteBookModal?: BsModalRef;
 
   constructor(
@@ -61,5 +63,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   openAddBookModal() {
     this.addBookModal = this.modalService.show(AddBookModalComponent, { class: 'modal-xl' });
+  }
+
+  openGoogleAPIBookAddModal() {
+    this.addBookGoogleAPIModal = this.modalService.show(AddBookGoogleApiModalComponent, { class: 'modal-lg' });
+    (this.addBookGoogleAPIModal.content as AddBookGoogleApiModalComponent);
   }
 }

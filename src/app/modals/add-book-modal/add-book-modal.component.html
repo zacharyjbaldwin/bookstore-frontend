@@ -39,8 +39,9 @@
     <div class="row">
       <div class="col-md-4">
         <div class="mb-3">
-          <label class="form-label">ISBN *</label>
-          <input type="number" class="form-control" formControlName="isbn13" required min="1000000000" max="9999999999999" pattern="\d{13}">
+          <label class="form-label">ISBN (10 or 13 digits) *</label>
+          <!-- pattern="\d{13}" -->
+          <input type="number" class="form-control" formControlName="isbn13" required min="1000000000" max="9999999999999">
           <span class="form-text error-message" *ngIf="addBookForm.get('isbn13')!.invalid && addBookForm.get('isbn13')!.touched">Field must be a 10-digit or 13-digit number with no dashes or spaces.</span>
         </div>
       </div>
@@ -63,8 +64,12 @@
       <div class="col-md-12">
         <div class="mb-3">
           <label class="form-label">Image URL * (must end in '.jpg', '.jpeg', or '.png')</label>
-          <input type="text" class="form-control" formControlName="imageUrl" required placeholder="https://www.example.com/cover.png" pattern="https?:\/\/.+\.(png|jpg|jpeg)">
-          <span class="form-text error-message" *ngIf="addBookForm.get('imageUrl')!.invalid && addBookForm.get('imageUrl')!.touched">Image URL is required, must begin with 'http://' or 'https://', and must end in '.jpg', '.jpeg', or '.png'.</span>
+          <!-- pattern="https?:\/\/.+\.(png|jpg|jpeg)" -->
+          <input type="text" class="form-control" formControlName="imageUrl" required placeholder="https://www.example.com/cover.png">
+          <div class="d-flex flex-column">
+            <span class="form-text error-message" *ngIf="gbsBook">Note: the Google Books API tends to return poor quality thumbnails. Please find a good quality thumbnail image before submitting.</span>
+            <span class="form-text error-message" *ngIf="addBookForm.get('imageUrl')!.invalid && addBookForm.get('imageUrl')!.touched">Image URL is required, must begin with 'http://' or 'https://', and must end in '.jpg', '.jpeg', or '.png'.</span>
+          </div>
         </div>
       </div>
     </div>
