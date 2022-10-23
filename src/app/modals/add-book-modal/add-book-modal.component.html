@@ -39,9 +39,9 @@
     <div class="row">
       <div class="col-md-4">
         <div class="mb-3">
-          <label class="form-label">ISBN 13 *</label>
-          <input type="number" class="form-control" formControlName="isbn13" required min="1111111111111" max="9999999999999" pattern="\d{13}">
-          <span class="form-text error-message" *ngIf="addBookForm.get('isbn13')!.invalid && addBookForm.get('isbn13')!.touched">Field must be a 13-digit number with no dashes or spaces.</span>
+          <label class="form-label">ISBN *</label>
+          <input type="number" class="form-control" formControlName="isbn13" required min="1000000000" max="9999999999999" pattern="\d{13}">
+          <span class="form-text error-message" *ngIf="addBookForm.get('isbn13')!.invalid && addBookForm.get('isbn13')!.touched">Field must be a 10-digit or 13-digit number with no dashes or spaces.</span>
         </div>
       </div>
       <div class="col-md-4">
