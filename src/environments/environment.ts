@@ -4,7 +4,18 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000'
+  apiUrl: 'http://localhost:3000',
+  stringFor: {
+    true: 'FDBC5F518E44154B29B54B77E7ACE79DAB5D55873552BF23B9B2F2EE0587B229',
+    false: 'C4356E4846A6CCC89006B1216C4D0A9F3ED59B3395E825C3003F0576C5FA3A61',
+    token: 'token',
+    expiration: 'expiration',
+    userId: 'userId',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    isAdmin: 'isAdmin',
+    email: 'email'
+  }
 };
 
 /*

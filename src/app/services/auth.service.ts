@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginError } from '../shared/login-error.enum';
 import { SignupError } from '../shared/signup-error.enum';
+import { Md5 } from 'ts-md5';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   private authenticationStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
   private isAdmin: boolean = false;
@@ -148,17 +147,19 @@ export class AuthService {
       this.email = authData.email;
       this.authenticationStatusListener.next(true);
       this.setAutoLogoutTimer(expiresIn / 1000);
+    } else {
+      this.clearAuthData();
     }
   }
 
   private getAuthData(): any {
-    const token = localStorage.getItem('token');
-    const expirationDate = localStorage.getItem('expiration');
-    const userId = localStorage.getItem('userId');
-    const firstname = localStorage.getItem('firstname');
-    const lastname = localStorage.getItem('lastname');
-    const isAdmin = localStorage.getItem('isAdmin') == 'true' ? true : false;
-    const email = localStorage.getItem('email');
+    const token = localStorage.getItem(Md5.hashStr(environment.stringFor.token));
+    const expirationDate = localStorage.getItem(Md5.hashStr(environment.stringFor.expiration));
+    const userId = localStorage.getItem(Md5.hashStr(environment.stringFor.userId));
+    const firstname = localStorage.getItem(Md5.hashStr(environment.stringFor.firstname));
+    const lastname = localStorage.getItem(Md5.hashStr(environment.stringFor.lastname));
+    const isAdmin = localStorage.getItem(Md5.hashStr(environment.stringFor.isAdmin)) == Md5.hashStr(environment.stringFor.true) ? true : false;
+    const email = localStorage.getItem(Md5.hashStr(environment.stringFor.email));
 
     if (!token || !expirationDate) {
       return;
@@ -182,22 +183,23 @@ export class AuthService {
   }
 
   private clearAuthData(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('firstname');
-    localStorage.removeItem('lastname');
-    localStorage.removeItem('isAdmin');
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.token));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.expiration));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.userId));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.firstname));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.lastname));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.isAdmin));
+    localStorage.removeItem(Md5.hashStr(environment.stringFor.email));
   }
 
   private saveAuthData(token: string, expirationDate: Date, userId: string, firstname: string, lastname: string, isAdmin: boolean, email: string): void {
-    localStorage.setItem('token', token);
-    localStorage.setItem('expiration', expirationDate.toISOString());
-    localStorage.setItem('userId', userId);
-    localStorage.setItem('firstname', firstname);
-    localStorage.setItem('lastname', lastname);
-    localStorage.setItem('isAdmin', (isAdmin == true ? 'true' : 'false'));
-    localStorage.setItem('email', email);
+    localStorage.setItem(Md5.hashStr(environment.stringFor.token), token);
+    localStorage.setItem(Md5.hashStr(environment.stringFor.expiration), expirationDate.toISOString());
+    localStorage.setItem(Md5.hashStr(environment.stringFor.userId), userId);
+    localStorage.setItem(Md5.hashStr(environment.stringFor.firstname), firstname);
+    localStorage.setItem(Md5.hashStr(environment.stringFor.lastname), lastname);
+    localStorage.setItem(Md5.hashStr(environment.stringFor.isAdmin), (isAdmin == true ? Md5.hashStr(environment.stringFor.true) : Md5.hashStr(environment.stringFor.false)));
+    localStorage.setItem(Md5.hashStr(environment.stringFor.email), email);
   }
 
   public signUp(email: string, firstname: string, lastname: string, password: string): void {
@@ -211,14 +213,9 @@ export class AuthService {
     this.http.post(`${environment.apiUrl}/api/auth/signup`, body)
       .subscribe({
         next: (response) => {
-
-
-          // TODO tie this up
           this.router.navigate(['/login']);
         },
         error: (error) => {
-          // this.isLoading = false;
-
           switch (error.error.error) {
             case 'EMAIL_ALREADY_IN_USE':
               this.signupError.next(SignupError.EmailAlreadyInUse);
@@ -227,7 +224,6 @@ export class AuthService {
               this.signupError.next(SignupError.GenericSignupError);
               break;
           }
-
           this.authenticationStatusListener.next(false);
         }
       });
