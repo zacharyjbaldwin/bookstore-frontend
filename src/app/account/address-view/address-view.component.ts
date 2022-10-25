@@ -17,7 +17,7 @@ export class AddressViewComponent implements OnInit {
   public loading: boolean = true;
   private userId: string;
   public addresses: Address[] = [];
-  public count: Number = 0;
+  public count: number = 0;
 
   constructor(
     private authService: AuthService,

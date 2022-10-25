@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
-import { BookService } from '../services/book.service';
 import { CartService } from '../services/cart.service';
 
-interface BookTuple {
+export interface BookTuple {
   id: string;
   title: string;
   quantity: number;
@@ -50,6 +49,10 @@ export class CartComponent implements OnInit {
       this.tax = (this.subtotal * 1.0825) - this.subtotal;
       this.totalPrice = this.subtotal + this.tax + this.shippingPrice;
       this.loading = false;
+      this.cartService.setSubtotal(this.subtotal);
+      this.cartService.setTax(this.tax);
+      this.cartService.setShippingPrice(this.shippingPrice);
+      this.cartService.setTotalPrice(this.totalPrice);
     }, (error) => {
       this.errorMessage = 'Failed to load cart. Please try again later.';
       this.toastr.error('Failed to load cart. Please try again later.');

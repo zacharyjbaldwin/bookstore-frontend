@@ -50,7 +50,7 @@ export class OrderService {
     return of(this.sampleOrder);
   }
 
-  public createOrder(addressId: string, cardType: CardType, last4CardDigits: Number, status: OrderStatus, shippingPrice: Number, subtotal: Number, tax: Number, totalPrice: Number) {
+  public createOrder(addressId: string, cardType: CardType, last4CardDigits: number, status: OrderStatus, shippingPrice: number, subtotal: number, tax: number, totalPrice: number) {
     return this.http.post(`${environment.apiUrl}/api/order`, {
       addressId: addressId,
       cardType: cardType,
