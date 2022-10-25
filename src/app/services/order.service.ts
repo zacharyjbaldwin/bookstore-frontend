@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Order } from '../models/order.model';
 import { CardType } from '../shared/card-type.enum';
 import { OrderStatus } from '../shared/order-status.enum';
@@ -40,11 +42,24 @@ export class OrderService {
     totalPrice: 23.74
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public getOrderById(orderId: string): Observable<Order> {
     // TODO GET .../api/order/<orderId>
     this.sampleOrder._id = orderId;
     return of(this.sampleOrder);
+  }
+
+  public createOrder(addressId: string, cardType: CardType, last4CardDigits: Number, status: OrderStatus, shippingPrice: Number, subtotal: Number, tax: Number, totalPrice: Number) {
+    return this.http.post(`${environment.apiUrl}/api/order`, {
+      addressId: addressId,
+      cardType: cardType,
+      last4CardDigits: last4CardDigits,
+      status: status,
+      shippingPrice: shippingPrice,
+      subtotal: subtotal,
+      tax: tax,
+      totalPrice: totalPrice
+    });
   }
 }

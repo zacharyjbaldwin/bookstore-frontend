@@ -37,14 +37,18 @@
     </div>
     <div>
       <h5>SHIP TO</h5>
-      <select class="form-select" (input)="selectedAddress = true;">
-        <option selected disabled>Select Address</option>
-        <option *ngFor="let address of addresses" value="{{ address._id }}">{{ address.sendTo }} - {{ address.addrLine1 }}, {{ address.addrLine2 ? address.addrLine2 + ',' : '' }} {{ address.city }} {{ address.state }}, {{ address.zip }}</option>
-      </select>
-      <a (click)="openAddAddressModal()" type="button" class="a-fix" style="color: #FE4487;">+ Add new address</a>
+      <form [formGroup]="selectAddressForm" (ngSubmit)="selectAddress()">
+        <select formControlName="address" class="form-select" (input)="selectedAddress = true;">
+          <option selected disabled>Select Address</option>
+          <option *ngFor="let address of addresses" value="{{ address._id }}">{{ address.sendTo }} - {{ address.addrLine1 }}, {{ address.addrLine2 ? address.addrLine2 + ',' : '' }} {{ address.city }} {{ address.state }}, {{ address.zip }}</option>
+        </select>
+        <a (click)="openAddAddressModal()" type="button" class="a-fix" style="color: #FE4487;">+ Add new address</a>
+        <button type="submit" class="btn btn-dark" style="border-radius: 0px; width: 100%;" [disabled]="!selectedShippingSpeed || !selectedAddress">Proceed to payment</button>
+      </form>
     </div>
-    <button (click)="changePage('card')" class="btn btn-dark" style="border-radius: 0px; width: 100%;" [disabled]="!selectedShippingSpeed || !selectedAddress">Proceed to payment</button>
   </div>
+
+
   <div *ngIf="currentPage == 'card'" class="col-md-6 offset-md-3 d-flex flex-column" style="gap:32px;">
     <div>
       <h4>PAYMENT</h4>
@@ -116,8 +120,8 @@
     <div>
       <h4>ORDER PREVIEW</h4>
       <p>click that button, i dare you</p>
-      <button *ngIf="showPlaceOrderButton" (click)="showPlaceOrderButton = !showPlaceOrderButton" class="btn btn-dark mt-3" style="border-radius: 0px; width:100%">Place order</button>
-      <div *ngIf="!showPlaceOrderButton" class="d-flex justify-content-center">lol</div>
+      <button (click)="placeOrder()" class="btn btn-dark mt-3" style="border-radius: 0px; width:100%">Place order</button>
+
     </div>
   </div>
 </div>
