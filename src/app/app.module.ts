@@ -38,6 +38,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
 import { AddAddressModalComponent } from './modals/add-address-modal/add-address-modal.component';
 import { EditAccountDetailsModalComponent } from './modals/edit-account-details-modal/edit-account-details-modal.component';
+import { AddBookGoogleApiModalComponent } from './modals/add-book-google-api-modal/add-book-google-api-modal.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { EditAccountDetailsModalComponent } from './modals/edit-account-details-
     CheckoutComponent,
     OrderCompleteComponent,
     AddAddressModalComponent,
-    EditAccountDetailsModalComponent
+    EditAccountDetailsModalComponent,
+    AddBookGoogleApiModalComponent
   ],
   imports: [
     BrowserModule,
