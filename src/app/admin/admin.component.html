@@ -1,6 +1,15 @@
 <div class="row">
   <tabset>
-    <tab heading="Orders">orders will go here</tab>
+    <tab>
+      <ng-template tabHeading>
+        <span>Orders <span class="badge rounded-pill text-bg-primary">{{ unreadOrders ? unreadOrders : '' }}</span></span>
+      </ng-template>
+      <div class="row">
+        <div class="col-md-12 mt-3">
+          <orders (updateUnreadCount)="updateUnreadCount($event)"></orders>
+        </div>
+      </div>
+    </tab>
     <tab heading="Store Manager">
       <div class="row">
         <div class="col-md-12 mt-3">
