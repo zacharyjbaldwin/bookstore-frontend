@@ -14,7 +14,8 @@ export class OrderViewComponent implements OnInit {
   public orderId: string = '';
   public order!: OrderDTO;
   public status: string[] = ['Pending', 'Canceled', 'Shipped'];
-  public cardType: string[] = ['VISA', 'MasterCard', 'Discover', 'American Express']
+  public cardType: string[] = ['VISA', 'MasterCard', 'Discover', 'American Express'];
+  public error: boolean = false;
 
   constructor(
     private orderService: OrderService,
@@ -26,8 +27,12 @@ export class OrderViewComponent implements OnInit {
   ngOnInit(): void {
     this.orderId = this.route.snapshot.params['id'];
     this.orderService.getOrderById(this.orderId).subscribe((order) => {
+      console.log(order);
       this.order = order;
       this.loading = false;
+    }, (error) => {
+      this.loading = false;
+      this.error = true;
     });
   }
 

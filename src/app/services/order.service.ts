@@ -68,16 +68,16 @@ export class OrderService {
   }
 
   public getAllOrders(): Observable<OrderDTO[]> {
-    return this.http.get<{ message: String, orders: OrderDTO[] }>(`${environment.apiUrl}/api/order`)
-      .pipe(map((results) => { return results.orders }));
+    return this.http.get<{ message: String, order: OrderDTO[] }>(`${environment.apiUrl}/api/order/all`)
+      .pipe(map((results) => { return results.order }));
   }
 
   public updateOrderStatus(orderId: String, status: OrderStatus) {
-    return this.http.put(`${environment.apiUrl}/api/order/${orderId}`, { status: status });
+    return this.http.put(`${environment.apiUrl}/api/order/${orderId}`, { newStatus: status });
   }
 
   public getMyOrders(): Observable<OrderDTO[]> {
-    return this.http.get<{ message: String, orders: OrderDTO[] }>(`${environment.apiUrl}/api/order/my-orders`)
-      .pipe(map((results) => { return results.orders }));
+    return this.http.get<{ message: String, order: OrderDTO[] }>(`${environment.apiUrl}/api/order`)
+      .pipe(map((results) => { return results.order }));
   }
 }
