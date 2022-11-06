@@ -1,8 +1,9 @@
 import { CardType } from "../shared/card-type.enum";
 import { OrderStatus } from "../shared/order-status.enum";
+import { Book } from "./book.model";
 
 export interface Order {
-  _id: string;
+  _id?: string;
   creator: string;
   contents: { bookId: string, quantity: number }[];
   status: OrderStatus;
@@ -21,4 +22,27 @@ export interface Order {
   totalPrice: number;
   shippingPrice: number;
   timestamp: string;
+}
+
+export interface OrderDTO {
+  addrLine1: string;
+  addrLine2?: string;
+  cardType: number;
+  city: string;
+  contents: {
+    item: Book,
+    quantity: number
+  }[];
+  creator: string;
+  last4CardDigits: number;
+  sendTo: string;
+  shippingPrice: number;
+  state: string;
+  status: OrderStatus;
+  subtotal: number;
+  tax: number;
+  timestamp: string;
+  totalPrice: number;
+  zip: string;
+  _id: string;
 }

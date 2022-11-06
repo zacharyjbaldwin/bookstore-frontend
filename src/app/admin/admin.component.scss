@@ -1,4 +1,5 @@
 @import "../../utilities.scss";
+@import "../../variables.scss";
 
 // th, td {
 //   border: 0.5px solid rgba(0, 0, 0, 0.15);
@@ -9,3 +10,7 @@
 //     font-size: 16px;
 //   }
 // }
+
+tab {
+    background-color: $background-color;
+}

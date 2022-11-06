@@ -65,8 +65,4 @@ export class CartComponent implements OnInit {
       this.getCart();
     });
   };
-
-  public placeOrder(): void {
-    alert('501 not implemented');
-  }
 }

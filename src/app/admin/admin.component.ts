@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   public books: Book[] = [];
   private subs = new Subscription();
+  public unreadOrders = 0;
 
   public addBookModal?: BsModalRef;
   public addBookGoogleAPIModal?: BsModalRef;
@@ -68,5 +69,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   openGoogleAPIBookAddModal() {
     this.addBookGoogleAPIModal = this.modalService.show(AddBookGoogleApiModalComponent, { class: 'modal-lg' });
     (this.addBookGoogleAPIModal.content as AddBookGoogleApiModalComponent);
+  }
+
+  updateUnreadCount(unreadCount: number) {
+    this.unreadOrders = unreadCount;
   }
 }

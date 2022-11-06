@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from '../models/order.model';
+import { Order, OrderDTO } from '../models/order.model';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -12,9 +12,10 @@ export class OrderViewComponent implements OnInit {
 
   public loading = true;
   public orderId: string = '';
-  public order!: Order;
+  public order!: OrderDTO;
   public status: string[] = ['Pending', 'Canceled', 'Shipped'];
-  public cardType: string[] = ['VISA', 'MasterCard', 'Discover', 'American Express']
+  public cardType: string[] = ['VISA', 'MasterCard', 'Discover', 'American Express'];
+  public error: boolean = false;
 
   constructor(
     private orderService: OrderService,
@@ -24,9 +25,14 @@ export class OrderViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
     this.orderService.getOrderById(this.orderId).subscribe((order) => {
+      console.log(order);
       this.order = order;
       this.loading = false;
+    }, (error) => {
+      this.loading = false;
+      this.error = true;
     });
   }
 

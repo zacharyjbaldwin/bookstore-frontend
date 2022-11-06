@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./variables.scss";
+
 html, body {
-    background-color: rgb(250, 250, 250);
+    background-color: $background-color;
 }

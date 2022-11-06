@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { APP_ID, Injectable } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Order } from '../models/order.model';
+import { Order, OrderDTO } from '../models/order.model';
 import { CardType } from '../shared/card-type.enum';
 import { OrderStatus } from '../shared/order-status.enum';
 
@@ -44,10 +44,14 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  public getOrderById(orderId: string): Observable<Order> {
+  public getOrderById(orderId: string): Observable<OrderDTO> {
     // TODO GET .../api/order/<orderId>
-    this.sampleOrder._id = orderId;
-    return of(this.sampleOrder);
+    return this.http.get<{ message: String, order: OrderDTO }>(`${environment.apiUrl}/api/order/${orderId}`)
+      .pipe(map((results) => { return results.order }));
+
+
+    // this.sampleOrder._id = orderId;
+    // return of(this.sampleOrder);
   }
 
   public createOrder(addressId: string, cardType: CardType, last4CardDigits: number, status: OrderStatus, shippingPrice: number, subtotal: number, tax: number, totalPrice: number) {
@@ -61,5 +65,19 @@ export class OrderService {
       tax: tax,
       totalPrice: totalPrice
     });
+  }
+
+  public getAllOrders(): Observable<OrderDTO[]> {
+    return this.http.get<{ message: String, order: OrderDTO[] }>(`${environment.apiUrl}/api/order/all`)
+      .pipe(map((results) => { return results.order }));
+  }
+
+  public updateOrderStatus(orderId: String, status: OrderStatus) {
+    return this.http.put(`${environment.apiUrl}/api/order/${orderId}`, { newStatus: status });
+  }
+
+  public getMyOrders(): Observable<OrderDTO[]> {
+    return this.http.get<{ message: String, order: OrderDTO[] }>(`${environment.apiUrl}/api/order`)
+      .pipe(map((results) => { return results.order }));
   }
 }

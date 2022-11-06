@@ -1,12 +1,17 @@
 <div class="row">
   <div class="col-md-8 offset-md-2">
+    <ng-container *ngIf="!loading && error">
+      <div class="alert alert-danger">
+        There was an error viewing this document.
+      </div>
+    </ng-container>
     <ng-container *ngIf="loading; else viewOrder">
       <div class="d-flex justify-content-center">
         <loading-spinner></loading-spinner>
       </div>
     </ng-container>
     <ng-template #viewOrder>
-      <div class="paper">
+      <div class="paper" *ngIf="!error">
         <div>
           <div class="d-flex justify-content-between">
             <h4>Between The Lines</h4>
@@ -45,10 +50,10 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let row of order.contents">
-                    <td>{{ row.bookId }}</td>
-                    <td>[PRICE]</td>
+                    <td>{{ row.item.title }}</td>
+                    <td>{{ row.item.price | currency:'USD' }}</td>
                     <td>{{ row.quantity }}</td>
-                    <td>[PRICE]</td>
+                    <td>{{ (row.item.price * row.quantity) | currency:'USD' }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -61,10 +66,10 @@
                 <div class="d-flex justify-content-start" style="gap: 12px">
                   <span><strong>Ship to</strong></span>
                   <div class="d-flex flex-column">
-                    <span>{{ order.address.sendTo }}</span>
-                    <span>{{ order.address.addrLine1 }}</span>
-                    <span *ngIf="order.address.addrLine2">{{ order.address.addrLine2 }}</span>
-                    <span>{{ order.address.city }}, {{ order.address.state }} {{ order.address.zip }}</span>
+                    <span>{{ order.sendTo }}</span>
+                    <span>{{ order.addrLine1 }}</span>
+                    <span *ngIf="order.addrLine2">{{ order.addrLine2 }}</span>
+                    <span>{{ order.city }}, {{ order.state }} {{ order.zip }}</span>
                   </div>
                 </div>
               </div>
